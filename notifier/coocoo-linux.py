@@ -9,7 +9,6 @@ import pynotify, json
 
 port = 50027
 socket = socket(AF_INET, SOCK_STREAM)
-data = ''
 
 socket.bind(('', port))
 socket.listen(5)
@@ -18,6 +17,7 @@ if not pynotify.init("Coocoo"):
 
 while True:
     connection, address = socket.accept()
+    data = ''
     while True:
         buf = connection.recv(4096)
         if not buf: break
