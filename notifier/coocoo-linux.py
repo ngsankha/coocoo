@@ -17,11 +17,12 @@ if not pynotify.init("Coocoo"):
     print "Unable to initialize libnotify."
 
 while True:
-    connection = socket.accept()
+    connection, address = socket.accept()
     while True:
-        data += connection.recv(4096)
-        if not data: break
-    packet = json.load(data)
+        buf = connection.recv(4096)
+        if not buf: break
+        data += buf
+    packet = json.loads(data)
     n = pynotify.Notification(packet['title'], packet['text'])
     if not n.show():
         print packet['title'] + " : " + packet['text']
